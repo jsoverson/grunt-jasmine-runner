@@ -194,6 +194,10 @@ function runPhantom(url,options,numReporters, cb) {
   });
 }
 
+function convertFilePathToUrlPath(filePath) {
+  return filePath.replace(/\\/g,'/');
+}
+
 function getRelativeFileList(/* args... */) {
   var list = Array.prototype.slice.call(arguments);
   var base = path.resolve(baseDir);
@@ -202,7 +206,7 @@ function getRelativeFileList(/* args... */) {
     files = files.concat(grunt.file.expandFiles(listItem));
   });
   files = grunt.util._(files).map(function(file){
-    return path.resolve(file).replace(base,'');
+     return convertFilePathToUrlPath(path.resolve(file).replace(base,''));
   });
   return files;
 }
